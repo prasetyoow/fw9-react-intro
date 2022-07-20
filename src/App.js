@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 function App() {
-  const [count, setCount] = useState(Number);
+  const [count, setCount] = useState(0);
   return (
     <div className="container py-5 my-5">
         <div className="card text-center p-5 m-5">
