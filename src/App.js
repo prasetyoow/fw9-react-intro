@@ -1,23 +1,36 @@
-import React, { useState } from "react";
+import React from "react";
+import axios from "axios";
+import {Col, Row} from "react-bootstrap";
 
-function App() {
-  const [count, setCount] = useState(0);
-  return (
-    <div className="container py-5 my-5">
-        <div className="card text-center p-5 m-5">
-            <div className="card-body">
-              <h1 className="text-muted">Counter App</h1>
-              <div className="container-content p-5 m-5">
-                <div className="d-flex justify-content-around align-items-center m-5 p-5">
-                  <button className="btn btn-danger" onClick={() => setCount(count - 1)} disabled = {count === 0}>-</button>
-                  <h2>{count}</h2>
-                  <button className="btn btn-success" onClick={() => setCount(count + 1)}>+</button>
-                </div>
-              </div>
-            </div>
-        </div>
-    </div>
-  );
-}
+class App extends React.Component {
+  state = {
+    profiles: []
+  }
 
-export default App;
+  componentDidMount() {
+    axios.get('https://rickandmortyapi.com/api/character')
+    .then(res => {
+      console.log(res.data.results);
+      this.setState({profiles: res.data.results});
+    })
+  }
+
+  render() {
+    return (
+      <main>
+        <Col>
+          <Row>
+          {this.state.profiles.map(obj => 
+            <Col className="text-center col-lg-4 col-md-6">
+            <img src={obj.image} alt="Pictures"/>
+            <h2>{obj.name}</h2>
+            </Col>
+           )}
+          </Row>
+        </Col>
+      </main>
+      )
+   }
+ }
+
+export default App
